@@ -2,7 +2,9 @@
 title: "Covid-19 Map"
 author: "Ian Brunjes"
 date: "9/24/2021"
-output: html_document
+output:
+  html_document:
+    code_folding: hide
 ---
 
 ```{r setup, include=FALSE}
@@ -17,8 +19,24 @@ library(tmap)
 library(spData)
 ```
 
-```{r cars}
-summary(cars)
+```{r}
+covid <- read.csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/latest/owid-covid-latest.csv")
+
+world_covid <- left_join(world, covid, by = c("name_long" = "location"))
+
+world_covid_selected <- world_covid %>% 
+  select("name_long", "geom", "total_cases", "total_cases_per_million", "total_deaths", "total_vaccinations", "people_fully_vaccinated")
+
+tm_shape(world_covid_filtered) +
+  tm_polygons(col = "total_cases_per_million") +
+  tm_compass(type = "8star") +
+  tm_style("col_blind") +
+  tm_layout(
+    legend.outside = T,
+    main.title = 'some title'
+  ) +
+  tm_credits("some text", position = "left")
+
 ```
 
 
