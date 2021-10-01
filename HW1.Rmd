@@ -1,11 +1,15 @@
 ---
-title: "Covid-19 Map"
-author: "Ian Brunjes"
+title: "EDS 223 Assignment 1: Cartography"
+author: 
+  - "Ian Brunjes" 
+  - "Paloma Cartwright"
 date: "9/24/2021"
 output:
   html_document:
     code_folding: hide
 ---
+
+## Covid-19 Cases Map 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -20,6 +24,7 @@ library(tmap)
 library(spData)
 ```
 
+
 ```{r}
 # Read in covid data from OWID github source
 covid <- read.csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/latest/owid-covid-latest.csv")
@@ -32,7 +37,7 @@ world_covid_selected <- world_covid %>%
   select("name_long", "geom", "total_cases", "total_cases_per_million", "total_deaths", "total_vaccinations", "people_fully_vaccinated")
 
 # Build map
-tm_shape(world_covid_filtered) +
+tm_shape(world_covid_selected) +
   tm_polygons(col = "total_cases_per_million") +
   tm_compass(type = "8star", position = "left") + # somewhere in the southern Pacific
   tm_style("col_blind") +
@@ -43,5 +48,9 @@ tm_shape(world_covid_filtered) +
   tm_credits("some text", position = "right") # maybe we can fit this bottom/right inside of Antarctica
 
 ```
+
+The data used to create this map was from the Our World in Data github account.
+
+Our World in Data. (2021, October 1). COVID-19 Dataset by Our World in Data. https://github.com/owid/covid-19-data/blob/adce182d4a5c99499500acabdd76a3a470f22eff/public/data/latest/owid-covid-latest.csv (Original work published 2020)
 
 
